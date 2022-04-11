@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+   <extension-point id="objective" name="Acapulco Objective" schema="schema/objective.exsd"/>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated mdeoptimiser4efm -->
+      <package
+            uri="http://www.example.org/mdeoptimiser4efm"
+            class="mdeoptimiser4efm.MDEOptimiser4EFMPackage"
+            genModel="model/mdeoptimiser4efm.genmodel"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="acapulco.prepare"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="acapulco.ui.PrepareAction"
+               icon="icons/acapulco.png"
+               id="acapulco.prepare"
+               label="Acapulco Prepare"
+               menubarPath="additions">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="acapulco.launch"
+            nameFilter="*.dimacs"
+            objectClass="org.eclipse.core.resources.IResource">
+         <action
+               class="acapulco.ui.LaunchAction"
+               icon="icons/acapulco.png"
+               id="acapulco.launch"
+               label="Acapulco Launch"
+               menubarPath="additions">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="acapulco.objective">
+      <objective
+            class="acapulco.objectives.impl.NumberOfSelectedFeaturesObjective">
+      </objective>
+      <objective
+            class="acapulco.objectives.impl.CSVFeatureAttributesObjective">
+      </objective>
+      <objective
+            class="acapulco.objectives.impl.DerivedFilesObjective">
+      </objective>
+   </extension>
+
+</plugin>
