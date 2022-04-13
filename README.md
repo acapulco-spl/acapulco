@@ -20,4 +20,4 @@ Import the acapulco plugins (`plugins` folder of this repository) in the Eclipse
 - Predefined generic objectives already included are: Total sum of numeric feature attributes in a CSV file, Number of features in the configuration, or Number of generated files after deriving the configuration through the Product Line.
 
 ## Other resources
-- A comparison of a version of Acapulco with other two tools is available in a [replication package](https://github.com/acapulco-spl/acapulco_replication_package).
+- A comparison of a version of Acapulco with other two tools is available in a [replication package](https://github.com/acapulco-spl/acapulco_replication_package). The first version of Acapulco is a refactoring of this other repository.
