@@ -28,12 +28,11 @@ import de.ovgu.featureide.fm.core.job.monitor.NullMonitor;
 public class PreparationPipeline {
 	private static PrintStream _err;
 
-	public static void generateAllFromFm(String fmPath, String fmNameInput, String caseName, String pathPrefix, IProgressMonitor monitor)
+	public static void generateAllFromFm(IFeatureModel inputFM, String fmNameInput, String outputPath, IProgressMonitor monitor)
 			throws IOException {
 
-		String directoryInput = new File(fmPath).getParentFile().getAbsolutePath();
-		String pathOutput = pathPrefix;
-		File outputFolder = new File(pathOutput + "\\acapulco\\" + caseName);
+		// String directoryInput = new File(fmPath).getParentFile().getAbsolutePath();
+		File outputFolder = new File(outputPath);
 		outputFolder.mkdirs();
 
 		System.out.println("[Start cleaning.] ");
@@ -42,7 +41,7 @@ public class PreparationPipeline {
 
 		String outputNoComplexConstraintsFMPath = new File(outputFolder, fmNameInput + "-nocomplex.sxfm.xml")
 				.getAbsolutePath();
-		List<IConstraint> removedConstraints = ComplexConstraintRemover.removeComplexConstraints(fmPath,
+		List<IConstraint> removedConstraints = ComplexConstraintRemover.removeComplexConstraints(inputFM,
 				outputNoComplexConstraintsFMPath);
 
 		openSystemErr();

@@ -6,11 +6,13 @@ import java.io.PrintStream;
 import java.nio.file.Paths;
 import java.util.List;
 
+import acapulco.utils.FileUtils;
 import de.ovgu.featureide.fm.core.FeatureModelAnalyzer;
 import de.ovgu.featureide.fm.core.analysis.cnf.LiteralSet;
 import de.ovgu.featureide.fm.core.base.IConstraint;
 import de.ovgu.featureide.fm.core.base.IFeatureModel;
 import de.ovgu.featureide.fm.core.io.manager.FeatureModelManager;
+import de.ovgu.featureide.fm.core.io.sxfm.SXFMFormat;
 import de.ovgu.featureide.fm.core.job.monitor.NullMonitor;
 
 /**
@@ -84,6 +86,12 @@ public class FeatureIDEUtils {
 		IFeatureModel fm = FeatureModelManager.load(featureIDE.toPath());
 		openSystemErr();
 		return FeatureIDE2FM.create(fm);
+	}
+	
+	public static void saveSXFM(File newFile, IFeatureModel fm) {
+		SXFMFormat format = new SXFMFormat();
+		String fmString = format.write(fm);
+		FileUtils.writeStringToFile(newFile, fmString);
 	}
 
 	private static void closeSystemErr() {

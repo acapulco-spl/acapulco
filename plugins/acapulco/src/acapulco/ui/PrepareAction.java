@@ -25,6 +25,10 @@ import acapulco.model.FeatureModel;
 import acapulco.preparation.PreparationPipeline;
 import acapulco.rulesgeneration.CpcoGenerator;
 import de.ovgu.featureide.fm.core.base.IFeatureModel;
+import de.ovgu.featureide.fm.core.conversion.CombinedConverter;
+import de.ovgu.featureide.fm.core.conversion.ComplexConstraintConverter;
+import de.ovgu.featureide.fm.core.conversion.ComplexConstraintConverter.Option;
+import de.ovgu.featureide.fm.core.conversion.IConverterStrategy;
 import de.ovgu.featureide.fm.core.io.manager.FeatureModelManager;
 
 public class PrepareAction implements IObjectActionDelegate {
@@ -47,35 +51,68 @@ public class PrepareAction implements IObjectActionDelegate {
 				messageBox.open();
 				return;
 			}
-			
+
+			// check complex constraints
+			final boolean userWantsToConvertComplexConstraints;
+			final boolean trivial = ComplexConstraintConverter.trivialRefactoring(fideFM);
+			if (!trivial) {
+				MessageBox messageBox = new MessageBox(Display.getCurrent().getActiveShell(),
+						SWT.ICON_WARNING | SWT.YES | SWT.NO);
+				messageBox.setText("Complex constraints found");
+				messageBox.setMessage(
+						"The feature model contains complex constraints that cannot be transformed trivially to simple implies and excludes constraints.\n\nDo you want to apply a method that will increase the number of features to perform this transformation?\n\nPress \"Yes\" to apply it, or \"No\" to ignore all complex constraints so you will potentially obtain invalid configurations.");
+				int response = messageBox.open();
+				if (response == SWT.YES) {
+					userWantsToConvertComplexConstraints = true;
+				} else {
+					userWantsToConvertComplexConstraints = false;
+				}
+			} else {
+				// if the transformation is trivial (pseudo complex constraints) we apply it
+				// without asking the user
+				userWantsToConvertComplexConstraints = true;
+			}
+
 			// Launch Progress dialog
-			ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(Display.getCurrent()
-					.getActiveShell());
+			ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(Display.getCurrent().getActiveShell());
 
 			try {
 				progressDialog.run(true, true, new IRunnableWithProgress() {
 					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException,
-							InterruptedException {
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+
+						int totalWork = 3; // remove complex constraints + preparation pipeline + generate cpcos
+						monitor.beginTask("Acapulco Prepare", totalWork);
+
+						monitor.subTask("Checking complex constraints");
+						IFeatureModel fideFMCorrected = fideFM;
+
+						if (userWantsToConvertComplexConstraints) {
+							IConverterStrategy strategy = new CombinedConverter();
+							ComplexConstraintConverter converter = new ComplexConstraintConverter();
+							Option[] options = new Option[] {};
+							fideFMCorrected = converter.convert(fideFM, strategy, options);
+						}
+
 						File fmFolder = fmFile.getParentFile();
 						String fmName = fmFile.getName().substring(0, fmFile.getName().indexOf('.'));
 
-						int totalWork = 2; // preparation pipeline + generate cpcos
-						monitor.beginTask("Acapulco Prepare", totalWork);
-
-						FeatureModel fm = FeatureIDE2FM.create(fideFM);
-
 						monitor.subTask("Preparation pipeline");
+						String pathOutput = fmFolder.getAbsolutePath();
+						File outputFolder = new File(pathOutput + "\\acapulco\\" + fmName);
 						try {
-							PreparationPipeline.generateAllFromFm(fmFile.getAbsolutePath(), fmName, fmName,
-									fmFolder.getAbsolutePath(), monitor);
+							PreparationPipeline.generateAllFromFm(fideFMCorrected, fmName, outputFolder.getAbsolutePath(), monitor);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 
 						monitor.worked(1);
+
+						FeatureModel fm = FeatureIDE2FM.create(fideFMCorrected);
 						
-						CpcoGenerator.generatorCPCOs(fm, fmName, fmFolder.getAbsolutePath(), fmFile.getAbsolutePath(), monitor);
+						// The monitor message is updated within the method
+						CpcoGenerator.generatorCPCOs(fm, fmName, fmFolder.getAbsolutePath(), fmFile.getAbsolutePath(),
+								monitor);
 						monitor.worked(1);
 					}
 				});
