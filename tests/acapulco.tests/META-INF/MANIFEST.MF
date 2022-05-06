@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Acapulco Tests
+Bundle-SymbolicName: acapulco.tests
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: acapulco
+Automatic-Module-Name: acapulco.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-15
+Require-Bundle: org.junit,
+ org.junit.jupiter.params,
+ org.junit.jupiter.api
+Import-Package: aima.core.logic.propositional.parsing.ast
