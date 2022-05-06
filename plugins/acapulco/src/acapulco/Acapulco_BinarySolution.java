@@ -32,7 +32,7 @@ import jmetal.encodings.variable.ArrayInt;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.JMException;
 
-public class aCaPulCO_BinarySolution extends BinarySolutionType {
+public class Acapulco_BinarySolution extends BinarySolutionType {
 
 	private static SATIBEA_Mutation mutationOfInitialSolution;
 
@@ -53,7 +53,7 @@ public class aCaPulCO_BinarySolution extends BinarySolutionType {
 	private List<Integer> firmVariables;
 	private static Random r = new Random();
 
-	public aCaPulCO_BinarySolution(Problem problem, int nFeat, String fm, List<Integer> mandatoryFeaturesIndices,
+	public Acapulco_BinarySolution(Problem problem, int nFeat, String fm, List<Integer> mandatoryFeaturesIndices,
 			List<Integer> deadFeaturesIndices, int[] seed, List<Rule> appliedRules, List<Integer> firmVariables,
 			List<List<Integer>> constraints) throws ClassNotFoundException {
 		super(problem);

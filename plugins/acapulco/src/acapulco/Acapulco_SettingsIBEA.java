@@ -27,7 +27,7 @@ import jmetal.operators.selection.BinaryTournament;
 import jmetal.util.JMException;
 import jmetal.util.comparators.FitnessComparator;
 
-public class aCaPulCO_SettingsIBEA extends Settings {
+public class Acapulco_SettingsIBEA extends Settings {
 
 	public static final String DEFAULT_POPULATION_SIZE = "100";
 	public static final String DEFAULT_MUTATION_PROBABILITY = "1.0";
@@ -40,7 +40,7 @@ public class aCaPulCO_SettingsIBEA extends Settings {
 	public double mutationProbability_;
 	public double crossoverProbability_;
 
-	public aCaPulCO_SettingsIBEA(Problem p) {
+	public Acapulco_SettingsIBEA(Problem p) {
 		super(p.getName());
 
 		problem_ = p;
@@ -95,15 +95,15 @@ public class aCaPulCO_SettingsIBEA extends Settings {
 		Map<Integer, String> featureNames = getFeatureNames(allLines);
 		Map<Integer, Integer> feature2ActivationRule = getFeature2Operator(allLines, rules, "Act_");
 		Map<Integer, Integer> feature2DeactivationRule = getFeature2Operator(allLines, rules, "De_");
-		List<Integer> trueOptionalFeatures = new ArrayList<>(aCaPulCO_Problem.featureIndicesAllowedFlip);
+		List<Integer> trueOptionalFeatures = new ArrayList<>(Acapulco_Problem.featureIndicesAllowedFlip);
 				
-		aCaPulCO_Mutation mutation_ = new aCaPulCO_Mutation(parameters,  fm, featureNames, numFeat, rules, feature2ActivationRule, feature2DeactivationRule, trueOptionalFeatures, 
+		Acapulco_Mutation mutation_ = new Acapulco_Mutation(parameters,  fm, featureNames, numFeat, rules, feature2ActivationRule, feature2DeactivationRule, trueOptionalFeatures, 
 				 constr);
 		mutation = mutation_;
 
 		parameters = new HashMap<>();
 		parameters.put("probability", crossoverProbability_);
-		crossover = new aCaPulCO_Crossover(parameters, mutation_);
+		crossover = new Acapulco_Crossover(parameters, mutation_);
 
 		/* Selection Operator */
 		parameters = new HashMap<>();

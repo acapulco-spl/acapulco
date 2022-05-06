@@ -63,7 +63,7 @@ public class SATIBEA_Mutation {
 	 * Valid solution types to apply this operator
 	 */
 	private static final List VALID_TYPES = Arrays.asList(BinarySolutionType.class, BinaryRealSolutionType.class,
-			IntSolutionType.class, aCaPulCO_BinarySolution.class);
+			IntSolutionType.class, Acapulco_BinarySolution.class);
 
 	private Double mutationProbability_ = null;
 
@@ -109,7 +109,7 @@ public class SATIBEA_Mutation {
 			if (violated > 0) {
 				IVecInt iv = new VecInt();
 
-				for (int j = 0; j < aCaPulCO_Problem.numFeatures; j++) {
+				for (int j = 0; j < Acapulco_Problem.numFeatures; j++) {
 					int feat = j + 1;
 
 					if (!blacklist.contains(feat)) {

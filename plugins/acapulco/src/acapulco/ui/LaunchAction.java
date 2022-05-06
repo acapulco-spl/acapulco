@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import acapulco.aCaPulCO_Main;
+import acapulco.Acapulco_Main;
 import acapulco.algorithm.termination.StoppingCondition;
 import acapulco.evaluation.output.ParseResults;
 import acapulco.evaluation.output.Results;
@@ -64,7 +64,7 @@ public class LaunchAction implements IObjectActionDelegate {
 			List<IObjective> objectives = launchDialog.getObjectives();
 			List<Integer> minMax = launchDialog.getMinMax();
 
-			aCaPulCO_Main acapulcoSearch = new aCaPulCO_Main();
+			Acapulco_Main acapulcoSearch = new Acapulco_Main();
 			String fullFmPath = fmFile.getAbsolutePath();
 
 			// Launch Progress dialog

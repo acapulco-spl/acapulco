@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
-import acapulco.aCaPulCO_SettingsIBEA;
+import acapulco.Acapulco_SettingsIBEA;
 import acapulco.activator.Activator;
 import acapulco.objectives.IObjective;
 
@@ -133,7 +133,7 @@ public class LaunchActionDialog extends TitleAreaDialog {
 		gridData.horizontalAlignment = GridData.FILL;
 		populationSizeText = new Text(container, SWT.BORDER);
 		populationSizeText.setLayoutData(gridData);
-		populationSizeText.setText(aCaPulCO_SettingsIBEA.DEFAULT_POPULATION_SIZE);
+		populationSizeText.setText(Acapulco_SettingsIBEA.DEFAULT_POPULATION_SIZE);
 
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
@@ -147,7 +147,7 @@ public class LaunchActionDialog extends TitleAreaDialog {
 		gridData.horizontalAlignment = GridData.FILL;
 		mutationProbabilityText = new Text(container, SWT.BORDER);
 		mutationProbabilityText.setLayoutData(gridData);
-		mutationProbabilityText.setText(aCaPulCO_SettingsIBEA.DEFAULT_MUTATION_PROBABILITY);
+		mutationProbabilityText.setText(Acapulco_SettingsIBEA.DEFAULT_MUTATION_PROBABILITY);
 
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
@@ -161,7 +161,7 @@ public class LaunchActionDialog extends TitleAreaDialog {
 		gridData.horizontalAlignment = GridData.FILL;
 		crossoverProbabilityText = new Text(container, SWT.BORDER);
 		crossoverProbabilityText.setLayoutData(gridData);
-		crossoverProbabilityText.setText(aCaPulCO_SettingsIBEA.DEFAULT_CROSSOVER_PROBABILITY);
+		crossoverProbabilityText.setText(Acapulco_SettingsIBEA.DEFAULT_CROSSOVER_PROBABILITY);
 
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);

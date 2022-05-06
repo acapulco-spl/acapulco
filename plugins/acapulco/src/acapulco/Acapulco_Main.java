@@ -24,7 +24,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.core.Variable;
 
-public class aCaPulCO_Main {
+public class Acapulco_Main {
 
 	protected String featureModel;
 	protected StoppingCondition stoppingCondition;
@@ -73,14 +73,14 @@ public class aCaPulCO_Main {
 		Algorithm a = null;
 		SolutionSet pop = null;
 		try {
-			aCaPulCO_Mutation.DEBUG_MODE = debug;
-			p = new aCaPulCO_Problem(fm, objectives, minMax, mandatory, dead, seed);
+			Acapulco_Mutation.DEBUG_MODE = debug;
+			p = new Acapulco_Problem(fm, objectives, minMax, mandatory, dead, seed);
 			String resultsFolder = new File(fm).getParentFile().getAbsolutePath() + "\\output";
 			ToolInstrumenter toolInstrumenter = new ToolInstrumenter(p.getNumberOfObjectives(),
 					p.getNumberOfConstraints(), "ACAPULCO", resultsFolder, 1);
-			a = new aCaPulCO_SettingsIBEA(p).configure(toolInstrumenter, sc, sv, popSize, mutationProbability,
-					crossoverProbability, fm, ((aCaPulCO_Problem) p).getNumFeatures(),
-					((aCaPulCO_Problem) p).getConstraints(), operators, monitor);
+			a = new Acapulco_SettingsIBEA(p).configure(toolInstrumenter, sc, sv, popSize, mutationProbability,
+					crossoverProbability, fm, ((Acapulco_Problem) p).getNumFeatures(),
+					((Acapulco_Problem) p).getConstraints(), operators, monitor);
 			
 			pop = a.execute();
 

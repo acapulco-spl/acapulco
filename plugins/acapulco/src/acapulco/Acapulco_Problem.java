@@ -15,7 +15,7 @@ import jmetal.core.Variable;
 import jmetal.encodings.variable.Binary;
 import jmetal.util.JMException;
 
-public class aCaPulCO_Problem extends Problem {
+public class Acapulco_Problem extends Problem {
 
 	public static String fm;
 	public List<IObjective> objectives;
@@ -33,7 +33,7 @@ public class aCaPulCO_Problem extends Problem {
 
 	private static final int N_VARS = 1;
 
-	public aCaPulCO_Problem(String fm, List<IObjective> objectives, List<Integer> minMax, String mandatory, String dead,
+	public Acapulco_Problem(String fm, List<IObjective> objectives, List<Integer> minMax, String mandatory, String dead,
 			String seedfile) throws Exception {
 		this.numberOfVariables_ = N_VARS;
 		this.numberOfObjectives_ = objectives.size();
@@ -45,7 +45,7 @@ public class aCaPulCO_Problem extends Problem {
 		loadFM(fm);
 		loadMandatoryDeadFeaturesIndices(mandatory, dead);
 		loadSeed(seedfile);
-		this.solutionType_ = new aCaPulCO_BinarySolution(this, numFeatures, fm, mandatoryFeaturesIndices,
+		this.solutionType_ = new Acapulco_BinarySolution(this, numFeatures, fm, mandatoryFeaturesIndices,
 				deadFeaturesIndices, seed, new ArrayList<>(), new ArrayList<>(), constraints);
 	}
 

@@ -20,7 +20,7 @@ import jmetal.encodings.variable.Binary;
 import jmetal.operators.mutation.Mutation;
 import jmetal.util.JMException;
 
-public class aCaPulCO_Mutation extends Mutation {
+public class Acapulco_Mutation extends Mutation {
 	public static boolean DEBUG_MODE = false;
 
 	private List<List<Integer>> constraints;
@@ -36,7 +36,7 @@ public class aCaPulCO_Mutation extends Mutation {
 
 	private List<Integer> trueOptionalFeatures;
 
-	public aCaPulCO_Mutation(HashMap<String, Object> parameters, String fm, Map<Integer, String> featureNames,
+	public Acapulco_Mutation(HashMap<String, Object> parameters, String fm, Map<Integer, String> featureNames,
 			int nFeat, List<ConfigurationSearchOperator> operators, Map<Integer, Integer> feature2ActivationRule,
 			Map<Integer, Integer> feature2DeactivationRule, List<Integer> trueOptionalFeatures,
 			List<List<Integer>> constraints) {

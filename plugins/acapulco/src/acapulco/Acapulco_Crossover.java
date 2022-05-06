@@ -19,15 +19,15 @@ import jmetal.util.JMException;
  *
  * @author chris
  */
-public class aCaPulCO_Crossover extends Crossover {
+public class Acapulco_Crossover extends Crossover {
 
 	private Double crossoverProbability_ = null;
-	private aCaPulCO_Mutation mutation;
+	private Acapulco_Mutation mutation;
 
 	/**
 	 * Constructor Creates a new instance of the single point crossover operator
 	 */
-	public aCaPulCO_Crossover(HashMap<String, Object> parameters, aCaPulCO_Mutation mutation) {
+	public Acapulco_Crossover(HashMap<String, Object> parameters, Acapulco_Mutation mutation) {
 		super(parameters);
 		if (parameters.get("probability") != null)
 			crossoverProbability_ = (Double) parameters.get("probability");
