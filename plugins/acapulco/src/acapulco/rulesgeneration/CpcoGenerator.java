@@ -1,7 +1,5 @@
 package acapulco.rulesgeneration;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +8,7 @@ import java.util.stream.Collectors;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.henshin.model.Rule;
 
+import acapulco.featureide.utils.FeatureIDE2FM;
 import acapulco.featuremodel.FeatureModelHelper;
 import acapulco.featuremodel.configuration.FMConfigurationMetamodelGenerator;
 import acapulco.model.Feature;
@@ -21,11 +20,13 @@ import acapulco.utils.emf.HenshinFileWriter;
 import de.ovgu.featureide.fm.core.FeatureModelAnalyzer;
 import de.ovgu.featureide.fm.core.analysis.cnf.LiteralSet;
 import de.ovgu.featureide.fm.core.base.IFeatureModel;
-import de.ovgu.featureide.fm.core.io.manager.FeatureModelManager;
 import de.ovgu.featureide.fm.core.job.monitor.NullMonitor;
 
 public class CpcoGenerator {
-	public static void generatorCPCOs(FeatureModel fm, String fmName, String outpath, String originalInputFMPath, IProgressMonitor monitor) {
+	public static void generatorCPCOs(IFeatureModel fmFeatureIDE, String fmName, String outpath, IProgressMonitor monitor) {
+		
+		FeatureModel fm = FeatureIDE2FM.create(fmFeatureIDE);
+		
 		outpath += "/acapulco/" + fmName;
 		FeatureActivationDiagram ad = new FeatureActivationDiagram(fm); // FM-specific
 		FMConfigurationMetamodelGenerator metamodelGen = new FMConfigurationMetamodelGenerator(fm, fmName, fmName,
@@ -41,10 +42,7 @@ public class CpcoGenerator {
 		trueOptional.removeAll(helper.getAlwaysActiveFeatures());
 		
 		// Remove dead features:
-		File fmFile = new File(Paths.get(originalInputFMPath).toString());
-		System.out.println("file: " + fmFile.getPath());
-		IFeatureModel originalFM = FeatureModelManager.load(fmFile.toPath());
-		FeatureModelAnalyzer operator = new FeatureModelAnalyzer(originalFM);
+		FeatureModelAnalyzer operator = new FeatureModelAnalyzer(fmFeatureIDE);
 		List<String> deadFeatures = operator.getDeadFeatures(new NullMonitor<LiteralSet>()).stream().map(f -> f.getName()).collect(Collectors.toList());
 		
 		System.out.println("+++++++++++++++++++++++++++++ Dead features ***+++++++++++++++++++++++++++++++++++");

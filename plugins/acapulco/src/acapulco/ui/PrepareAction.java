@@ -20,8 +20,6 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import acapulco.featureide.utils.FeatureIDE2FM;
-import acapulco.model.FeatureModel;
 import acapulco.preparation.PreparationPipeline;
 import acapulco.rulesgeneration.CpcoGenerator;
 import de.ovgu.featureide.fm.core.base.IFeatureModel;
@@ -107,12 +105,9 @@ public class PrepareAction implements IObjectActionDelegate {
 						}
 
 						monitor.worked(1);
-
-						FeatureModel fm = FeatureIDE2FM.create(fideFMCorrected);
 						
 						// The monitor message is updated within the method
-						CpcoGenerator.generatorCPCOs(fm, fmName, fmFolder.getAbsolutePath(), fmFile.getAbsolutePath(),
-								monitor);
+						CpcoGenerator.generatorCPCOs(fideFMCorrected, fmName, fmFolder.getAbsolutePath(), monitor);
 						monitor.worked(1);
 					}
 				});

@@ -27,34 +27,31 @@ public class FeatureIDE2FM {
 
 		Feature root = createStructure(fs);
 		myfm.setOwnedRoot(root);
-		
+
 		// constraints
 		// TODO currently only support for implies and mutex
-		for(IConstraint c : fm.getConstraints()) {
+		for (IConstraint c : fm.getConstraints()) {
 			Collection<IFeature> f = c.getContainedFeatures();
-			if(f.size() == 2) {
+			if (f.size() == 2) {
 				Iterator<IFeature> i = f.iterator();
 				IFeature left = i.next();
 				IFeature right = i.next();
-				// requires and excludes
-				// TODO basic string comparison, there are other possible representations for excludes
-				//System.out.println(c);
-				if (c.getDisplayName().contains(" | ") || c.getDisplayName().contains(" => ")) {
+				if (FeatureIDEUtils.isImplies(c)) {
+					CrossTreeConstraint ctc = MDEOptimiser4EFMFactory.eINSTANCE.createCrossTreeConstraint();
+					if (FeatureIDEUtils.isImpliesLeftToRight(c)) {
+						ctc.setLeftFeature(FeatureModelHelper.getFeatureByName(myfm, left.getName()));
+						ctc.setRightFeature(FeatureModelHelper.getFeatureByName(myfm, right.getName()));
+					} else {
+						ctc.setLeftFeature(FeatureModelHelper.getFeatureByName(myfm, right.getName()));
+						ctc.setRightFeature(FeatureModelHelper.getFeatureByName(myfm, left.getName()));
+					}
+					ctc.setType(CrossTreeConstraintType.REQUIRES);
+					myfm.getCrossTreeConstraints().add(ctc);
+				} else if (FeatureIDEUtils.isExcludes(c)) {
 					CrossTreeConstraint ctc = MDEOptimiser4EFMFactory.eINSTANCE.createCrossTreeConstraint();
 					ctc.setLeftFeature(FeatureModelHelper.getFeatureByName(myfm, left.getName()));
 					ctc.setRightFeature(FeatureModelHelper.getFeatureByName(myfm, right.getName()));
-					//System.out.println(c.getDisplayName());
-					if (c.getDisplayName().startsWith("-") && c.getDisplayName().contains(" | -")) {
-						ctc.setType(CrossTreeConstraintType.EXCLUDES);
-					} else if (c.getDisplayName().startsWith("-") && c.getDisplayName().contains(" => -")) {
-						ctc.setType(CrossTreeConstraintType.EXCLUDES);
-					} else {
-						ctc.setType(CrossTreeConstraintType.REQUIRES);	
-						if(c.getDisplayName().contains(" | -") || c.getDisplayName().contains(" => -")) {
-							ctc.setLeftFeature(FeatureModelHelper.getFeatureByName(myfm, right.getName()));
-							ctc.setRightFeature(FeatureModelHelper.getFeatureByName(myfm, left.getName()));	
-						}
-					}
+					ctc.setType(CrossTreeConstraintType.EXCLUDES);
 					myfm.getCrossTreeConstraints().add(ctc);
 				}
 			}
@@ -66,8 +63,7 @@ public class FeatureIDE2FM {
 	/**
 	 * To be used recursively
 	 * 
-	 * @param current
-	 *            featureIde feature structure
+	 * @param current featureIde feature structure
 	 * @return feature
 	 */
 	public static Feature createStructure(IFeatureStructure current) {

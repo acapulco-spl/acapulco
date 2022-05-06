@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.ModelElement;
 import org.eclipse.emf.henshin.model.Module;
@@ -15,7 +13,7 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.emf.henshin.model.impl.HenshinFactoryImpl;
 
 public class HenshinFileWriter {
-	
+
 	public static void writeModuleToPath(List<Unit> units, String path) {
 		StringBuilder result = new StringBuilder();
 		Module module = HenshinFactoryImpl.eINSTANCE.createModule();
@@ -27,7 +25,7 @@ public class HenshinFileWriter {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void writeModuleToPath(Module module, String path) {
 		StringBuilder result = new StringBuilder();
 		createStringRepresentation((Module) module, result);
@@ -45,18 +43,18 @@ public class HenshinFileWriter {
 	}
 
 	private static void createStringRepresentation(Module module, Rule rule, StringBuilder sb) {
-		sbAppend("Rule ",rule.getName(), sb);
+		sbAppend("Rule ", rule.getName(), sb);
 
 		if (!rule.getAnnotations().isEmpty()) {
 			String featureConstraint = rule.getAnnotations().get(0).getValue();
 			String featuresAsString = rule.getAnnotations().get(2).getValue().replace(" ", "");
-			sbAppend("FMConstraint ",featureConstraint,sb);
-			sbAppend("Features ",featuresAsString,sb);
+			sbAppend("FMConstraint ", featureConstraint, sb);
+			sbAppend("Features ", featuresAsString, sb);
 		}
-		
+
 		processRuleContents(rule, sb);
 		for (Rule multi : rule.getMultiRules()) {
-			sbAppend("MultiRule ",multi.getName(), sb);
+			sbAppend("MultiRule ", multi.getName(), sb);
 			processRuleContents(multi, sb);
 		}
 	}
@@ -73,19 +71,18 @@ public class HenshinFileWriter {
 			Node rhsNode = m.getImage();
 
 			sb.append("Node");
-			
+
 //			if(!rule.getMultiMappings().isEmpty())
 //				System.out.println("a");
-				
-			if (rule.getKernelRule() != null
-					&& rule.getMultiMappings().getOrigin(lhsNode) == null) {
-				sb.append("*");				
+
+			if (rule.getKernelRule() != null && rule.getMultiMappings().getOrigin(lhsNode) == null) {
+				sb.append("*");
 			}
-			
+
 			sb.append(" ");
 			sb.append(lhsNode.getType().getName());
 			sb.append(": ");
-			
+
 			if (rhsNode.getAttributes().isEmpty()) {
 				sb.append("noop");
 			} else {
@@ -103,7 +100,6 @@ public class HenshinFileWriter {
 			sb.append("\n");
 		}
 	}
-
 
 	static String getPresenceCondition(ModelElement element) {
 		if (!element.getAnnotations().isEmpty())
