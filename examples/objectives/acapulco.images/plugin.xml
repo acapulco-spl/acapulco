@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="acapulco.objective">
+      <objective
+            class="acapulco.images.objectives.ImagesColorObjective">
+      </objective>
+      <objective
+            class="acapulco.images.objectives.ImagesSimilarToImageObjective">
+      </objective>
+      <objective
+            class="acapulco.images.objectives.ImagesInteractiveObjective">
+      </objective>
+   </extension>
+
+</plugin>
