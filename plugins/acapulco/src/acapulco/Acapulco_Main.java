@@ -4,14 +4,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 
+import acapulco.activator.Activator;
 import acapulco.algorithm.instrumentation.ToolInstrumenter;
 import acapulco.algorithm.termination.StoppingCondition;
 import acapulco.engine.variability.ConfigurationSearchOperator;
@@ -127,10 +132,47 @@ public class Acapulco_Main {
 
 			File csvFile = new File(resultsFolder + "\\optimalConfigs.csv");
 			FileUtils.writeStringToFile(csvFile, resultsCsv.toString());
+			
+			
+			// Pareto-front serialize
+			if (objectives.size() == 2) {
+				createParetoFrontReport(objectives, csvFile, resultsFolder);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void createParetoFrontReport(List<IObjective> objectives, File resultsCsvFile, String outputFolderPath)
+			throws IOException, MalformedURLException {
+		String base = Platform.getBundle(Activator.PLUGIN_ID).getEntry("/").toString();
+		String relativeUri = "paretoFrontTemplate.html";
+		URL file = FileLocator.toFileURL(new URL(base + relativeUri));
+		File f = new File(file.getFile());
+		if (!f.exists()) {
+			System.err.println(f.getAbsolutePath() + " does not exist.");
+			return;
+		}
+		String template = FileUtils.getStringOfFile(f);
+		template = template.replace("X axis label", objectives.get(0).getName());
+		template = template.replace("Y axis label", objectives.get(1).getName());
+		
+		List<String> csv = FileUtils.getLinesOfFile(resultsCsvFile);
+		String data = "";
+		// ignore header
+		for (int ci = 1; ci < csv.size(); ci ++) {
+			String line = csv.get(ci);
+			String[] split = line.split(",");
+			data += "{x:" + split[1] + ",y:" + split[2] + "}";
+			if (ci != csv.size() - 1) {
+				data += ",";
+			}
+		}
+		template = template.replace("{x:-10,y:0},{x:0,y:10}", data);
+		
+		File paretoFrontFile = new File(outputFolderPath + "\\paretoFront.html");
+		FileUtils.writeStringToFile(paretoFrontFile, template);
 	}
 
 	public String transformToConfigFile(String arrayZeroOnes) {

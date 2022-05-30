@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Results</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div><canvas id="myChart"></canvas></div>
+
+<script>
+const data = {
+  datasets: [{
+    label: 'Result',
+data:[{x:-10,y:0},{x:0,y:10}],
+    backgroundColor: 'rgb(255, 99, 132)'
+  }],
+};
+
+const config = {
+  type: 'scatter',
+  data: data,
+  options: {
+    scales: {
+      x: {
+      	title: {
+        display: true,
+text: 'X axis label'
+        },
+        type: 'linear',
+        position: 'bottom'
+      },
+      y: {
+      	title: {
+        display: true,
+text: 'Y axis label'
+		}
+      }
+    }
+  }
+};
+
+const myChart = new Chart(document.getElementById('myChart'),config);
+</script></body></html>
