@@ -54,6 +54,9 @@
             class="acapulco.objectives.impl.DerivedFilesObjective">
       </objective>
       <objective
+            class="acapulco.objectives.impl.DerivedLinesObjective">
+      </objective>
+      <objective
             class="acapulco.objectives.impl.ValidConfigObjective">
       </objective>
    </extension>
