@@ -47,7 +47,7 @@ public class ToolInstrumenter {
 		this.collectPopulationSize(population.size());
 		this.collectElapsedTime();
 	}
-
+	
 	public void collectNFE(Integer nfe) {
 		this.accumulator.add("NFE", nfe);
 	}
@@ -69,12 +69,13 @@ public class ToolInstrumenter {
 	}
 
 	public void serialiseAccumulator() {
-		String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		File batchRootDirectory = this.batchOutputPath.toFile();
+		// String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		// File batchRootDirectory = this.batchOutputPath.toFile();
 
 		// File serializedOutputFile = new File(
 		//		String.format("output/%s/%s/batch-%s-%s", timestamp, batchRootDirectory, batchNumber, this.serializedOutputFileName));
-		File serializedOutputFile = new File(batchRootDirectory, this.serializedOutputFileName);
+		// File serializedOutputFile = new File(batchRootDirectory, this.serializedOutputFileName);
+		File serializedOutputFile = new File(outputPath, this.serializedOutputFileName);
 				
 		try {
 

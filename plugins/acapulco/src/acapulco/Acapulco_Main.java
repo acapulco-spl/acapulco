@@ -90,7 +90,9 @@ public class Acapulco_Main {
 			pop = a.execute();
 
 			System.out.println("******* END OF RUN! SOLUTIONS: ***");
-
+			
+			toolInstrumenter.serialiseAccumulator();
+			
 			// Output the results
 			monitor.subTask("Creation of output results");
 			
