@@ -2,18 +2,23 @@
 Acapulco is a tool to support Product Line configuration using genetic algorithms and consistency-preserving configuration operators.
 
 ## Installation
+
+For the moment Acapulco is to be launched from an Eclipse workspace and not as an update site or similar.
+
 Requirements
 - Java JDK 13+
 - Eclipse 2020 (4.18.0)+
 
 In your eclipse installation, install
-- [FeatureIDE](https://featureide.github.io/) framework for feature-oriented software development. Tested with version 3.8.1.
-- [Eclipse Henshin](https://www.eclipse.org/henshin/) 1.7.0. The required plugin is `org.eclipse.emf.henshin.model`.
+- [FeatureIDE](https://featureide.github.io/) framework for feature-oriented software development. Tested with version 3.8.1 and 3.9.3.
+- [Xtend](https://eclipse.dev/Xtext/xtend/) framework. Some acapulco source code uses Xtend instead of Java, so once you will import the acapulco plugins in the workspace, the automatic build of the source code will create some needed Java classes in the `xtend-gen` package of the `acapulco` project. Tested with version 2.31
 
-Import the acapulco plugins (`plugins` folder of this repository) in the Eclipse workspace. Then right click the plugin and select `Run As` -> `Eclipse Application`
+Import the plugin `org.eclipse.emf.henshin.model` in the Eclipse workspace [Eclipse Henshin](https://www.eclipse.org/henshin/) [Eclipse Henshin repository](https://git.eclipse.org/c/henshin/org.eclipse.emft.henshin.git/) Tested with version 1.9.0.
+
+Import the acapulco plugins (`plugins` folder of this repository) in the Eclipse workspace. Then right click the plugin and select `Run As` -> `Eclipse Application`. A new instance of Eclipse will be opened with the Acapulco functionality.
 
 ## Getting started
-- Right click a feature model and click on `Acapulco prepare`. A set of resources will be generated with a message about how to perform the `Acapulco launch`. When launching, a window to configure the parameters for the optimization will appear. The pareto front configurations and a CSV file with their objectives' values will be generated at the end of the process.
+- Right click a feature model (in the Package Explorer or Project Explorer) and click on `Acapulco prepare`. A set of resources will be generated with a message about how to perform the `Acapulco launch`. When launching, a window to configure the parameters for the optimization will appear. The pareto front configurations and a CSV file with their objectives' values will be generated at the end of the process.
 
 The video below shows a demo of Acapulco.
 
