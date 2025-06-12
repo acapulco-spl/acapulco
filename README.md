@@ -30,3 +30,6 @@ https://user-images.githubusercontent.com/7057319/207927725-13893bbd-da10-43c9-a
 
 ## Other resources
 - A comparison of a version of Acapulco with other two tools is available in a [replication package](https://github.com/acapulco-spl/acapulco_replication_package). The first version of Acapulco is a refactoring of this other repository.
+
+## Troubleshooting
+In case of Out of Memory issues in the console during Acapulco prepare or Acapulco launch, try to increase the memory allocated to Eclipse. For this, click on the main menu Run -> Run configurations. Eclipse application. Arguments tab. And in VM Arguments increase the memory. This will depend on your computer, but for instance -Xms1024m -Xmx8192m . Then use this Run by clicking on Apply and Run to launch the new Eclipse instance with Acapulco functionality.
